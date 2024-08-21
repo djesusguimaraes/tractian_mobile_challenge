@@ -13,7 +13,11 @@ void injectDependencies() {
 
   getIt.registerLazySingleton<CompaniesService>(() => CompaniesService(client: getIt(), path: ''));
 
-  getIt.registerLazySingleton<LocationsService>(() => LocationsService(client: getIt(), path: 'locations'));
+  getIt.registerFactoryParam<LocationsService, String, dynamic>(
+    (id, _) => LocationsService(client: getIt(), path: '$id/locations'),
+  );
 
-  getIt.registerLazySingleton<AssetsService>(() => AssetsService(client: getIt(), path: 'assets'));
+  getIt.registerFactoryParam<AssetsService, String, dynamic>(
+    (id, _) => AssetsService(client: getIt(), path: '$id/assets'),
+  );
 }

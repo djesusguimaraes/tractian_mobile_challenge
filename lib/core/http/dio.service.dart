@@ -7,26 +7,19 @@ abstract class DioService<T, ID> extends DioBase<T, ID> {
   DioService({required this.client, required super.path});
 
   @override
-  Future<T> get(ID id) async {
+  Future<List<T>> getAll() async {
     try {
-      final response = await client.get('/$id/$path');
-      final data = response.data;
-      return converter.fromJson(data);
+      final endpoint = path.isNotEmpty ? '/$path' : '';
+      final response = await client.get(endpoint);
+      final data = (response.data as List).cast<Map<String, dynamic>>();
+      return data.map(converter.fromJson).toList();
     } on Exception catch (_) {
       rethrow;
     }
   }
 
   @override
-  Future<List<T>> getAll() async {
-    try {
-      final response = await client.get('/$path');
-      final List<Map<String, dynamic>> data = response.data;
-      return data.map(converter.fromJson).toList();
-    } on Exception catch (_) {
-      rethrow;
-    }
-  }
+  Future<T> get(ID id) => throw UnimplementedError();
 
   @override
   Future<T> create(T model) => throw UnimplementedError();
