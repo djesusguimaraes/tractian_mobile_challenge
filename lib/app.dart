@@ -11,9 +11,6 @@ class App extends StatelessWidget {
   Widget build(context) => MaterialApp(
         title: 'TRACTIAN Mobile Challenge',
         debugShowCheckedModeBanner: false,
-        scrollBehavior: ScrollConfiguration.of(context).copyWith(
-          physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
-        ),
         routes: {AssetsPage.route: (_) => const AssetsPage()},
         home: const HomePage(),
         theme: AppTheme.light,
