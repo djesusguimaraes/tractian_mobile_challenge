@@ -5,7 +5,7 @@ import 'package:tractian_mobile_challenge/core/utils/app_assets.dart';
 import 'package:tractian_mobile_challenge/domain/http/companies.service.dart';
 import 'package:tractian_mobile_challenge/ui/features/assets/assets.page.dart';
 import 'package:tractian_mobile_challenge/ui/features/home/widgets/company_tile.dart';
-import 'package:tractian_mobile_challenge/ui/features/widgets/future_retry_builder.widget.dart';
+import 'package:tractian_mobile_challenge/ui/widgets/future_retry_builder.widget.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});

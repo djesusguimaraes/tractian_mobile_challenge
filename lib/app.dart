@@ -9,10 +9,13 @@ class App extends StatelessWidget {
 
   @override
   Widget build(context) => MaterialApp(
-        theme: AppTheme.light,
-        debugShowCheckedModeBanner: false,
         title: 'TRACTIAN Mobile Challenge',
+        debugShowCheckedModeBanner: false,
+        scrollBehavior: ScrollConfiguration.of(context).copyWith(
+          physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+        ),
         routes: {AssetsPage.route: (_) => const AssetsPage()},
         home: const HomePage(),
+        theme: AppTheme.light,
       );
 }

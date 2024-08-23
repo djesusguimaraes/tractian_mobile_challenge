@@ -1,5 +1,7 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+
+import 'package:tractian_mobile_challenge/core/domain/asset.entity.dart';
 import 'package:tractian_mobile_challenge/core/domain/item.entity.dart';
 
 class AssetsFilter extends StatefulWidget {
@@ -13,15 +15,8 @@ class AssetsFilter extends StatefulWidget {
 }
 
 class _AssetsFilterState extends State<AssetsFilter> {
-  final _controller = TextEditingController();
-
+  String _query = '';
   int? _choice;
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) => Column(children: [
@@ -29,7 +24,7 @@ class _AssetsFilterState extends State<AssetsFilter> {
           padding: const EdgeInsets.all(16),
           child: Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.start, children: [
             TextField(
-              controller: _controller,
+              onChanged: (value) => setState(() => _query = value),
               decoration: const InputDecoration(prefixIcon: Icon(Icons.search), hintText: 'Buscar Ativo ou Local'),
             ),
             const SizedBox(height: 8),
@@ -47,9 +42,25 @@ class _AssetsFilterState extends State<AssetsFilter> {
             ),
           ]),
         ),
-        const Divider(),
-        Expanded(child: widget.builder.call([])),
+        const Divider(height: 0),
+        Expanded(child: widget.builder.call(filtered)),
       ]);
+
+  List<Item> get filtered {
+    final result = widget.items.where((item) => item.name.toLowerCase().contains(_query.toLowerCase())).where((item) {
+      if (_choice != null) {
+        if (item is! Asset) return false;
+        if (_choice == 0) return item.sensorType == SensorType.energy;
+        if (_choice == 1) return item.status == Status.alert;
+      }
+      return true;
+    }).toList();
+
+    final parentIds = result.map((res) => res.parents).flattened.toSet();
+    final parents = parentIds.map((id) => widget.items.firstWhere((item) => item.id == id));
+
+    return {...result, ...parents}.toList();
+  }
 
   List<(IconData, String)> get choices => [
         (Icons.bolt_outlined, 'Sensor de Energia'),

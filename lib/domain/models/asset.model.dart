@@ -1,7 +1,7 @@
 import 'package:tractian_mobile_challenge/core/domain/asset.entity.dart';
 
 class AssetModel extends Asset {
-  AssetModel({
+  const AssetModel({
     required super.id,
     required super.name,
     super.parentId,
