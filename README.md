@@ -3,7 +3,6 @@
 
 ## Demonstração
 
-![](demonstration.mp4)
 
 ## Possíveis Melhorias
 
