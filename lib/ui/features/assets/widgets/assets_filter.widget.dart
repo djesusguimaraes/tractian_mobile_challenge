@@ -43,7 +43,7 @@ class _AssetsFilterState extends State<AssetsFilter> {
           ]),
         ),
         const Divider(height: 0),
-        Expanded(child: widget.builder.call(filtered)),
+        Expanded(child: widget.builder.call(filtered..sort((a, b) => a.type.index.compareTo(b.type.index)))),
       ]);
 
   List<Item> get filtered {
